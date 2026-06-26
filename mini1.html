@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Agriculture Assistant</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+background:linear-gradient(to right,#4CAF50,#8BC34A);
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+padding:20px;
+}
+
+.container{
+width:420px;
+background:white;
+padding:25px;
+border-radius:15px;
+box-shadow:0 10px 20px rgba(0,0,0,.3);
+}
+
+h1{
+text-align:center;
+color:green;
+margin-bottom:20px;
+}
+
+label{
+font-weight:bold;
+margin-top:12px;
+display:block;
+}
+
+input,select{
+width:100%;
+padding:10px;
+margin-top:5px;
+border:1px solid #ccc;
+border-radius:8px;
+font-size:15px;
+}
+
+button{
+width:100%;
+padding:12px;
+margin-top:20px;
+border:none;
+border-radius:8px;
+background:green;
+color:white;
+font-size:17px;
+cursor:pointer;
+transition:.3s;
+}
+
+button:hover{
+background:darkgreen;
+}
+
+.result{
+margin-top:20px;
+padding:15px;
+background:#f1f8e9;
+border-left:6px solid green;
+border-radius:8px;
+display:none;
+}
+
+.result h3{
+color:green;
+margin-bottom:10px;
+}
+
+.footer{
+text-align:center;
+margin-top:15px;
+font-size:13px;
+color:#666;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🌱 Smart Agriculture Assistant</h1>
+
+<label>Temperature (°C)</label>
+<input type="number" id="temp" placeholder="Enter Temperature">
+
+<label>Soil Moisture (%)</label>
+<input type="number" id="moisture" placeholder="Enter Soil Moisture">
+
+<label>Soil Type</label>
+<select id="soil">
+<option>Loamy</option>
+<option>Clay</option>
+<option>Sandy</option>
+<option>Black</option>
+<option>Red</option>
+</select>
+
+<label>Weather</label>
+<select id="weather">
+<option>Sunny</option>
+<option>Rainy</option>
+<option>Cloudy</option>
+</select>
+
+<button onclick="predict()">Get Recommendation</button>
+
+<div class="result" id="output">
+<h3>Recommendation</h3>
+<p id="crop"></p>
+<p id="irrigation"></p>
+<p id="soiltip"></p>
+<p id="weatherTip"></p>
+</div>
+
+<div class="footer">
+Smart Agriculture Assistant | Mini Project
+</div>
+
+</div>
+
+<script>
+
+function predict(){
+
+let temp=parseFloat(document.getElementById("temp").value);
+let moisture=parseFloat(document.getElementById("moisture").value);
+let soil=document.getElementById("soil").value;
+let weather=document.getElementById("weather").value;
+
+if(isNaN(temp)||isNaN(moisture)){
+alert("Please enter all values");
+return;
+}
+
+let crop="";
+let irrigation="";
+let soiltip="";
+let weatherTip="";
+
+
+// Crop Recommendation
+
+if(temp<20 && moisture>60)
+crop="🌾 Recommended Crop: Wheat";
+
+else if(temp>=20 && temp<=30 && soil=="Loamy")
+crop="🌾 Recommended Crop: Rice";
+
+else if(temp>30 && soil=="Sandy")
+crop="🌽 Recommended Crop: Maize";
+
+else if(temp>28 && soil=="Black")
+crop="🌱 Recommended Crop: Cotton";
+
+else
+crop="🥬 Recommended Crop: Vegetables";
+
+
+// Irrigation
+
+if(moisture<30)
+irrigation="💧 Irrigation Needed: HIGH";
+
+else if(moisture<60)
+irrigation="💧 Irrigation Needed: MODERATE";
+
+else
+irrigation="💧 Irrigation Needed: LOW";
+
+
+// Soil Tip
+
+switch(soil){
+
+case "Loamy":
+soiltip="🧪 Soil Tip: Best for most crops. Add compost yearly.";
+break;
+
+case "Clay":
+soiltip="🧪 Soil Tip: Improve drainage with organic matter.";
+break;
+
+case "Sandy":
+soiltip="🧪 Soil Tip: Water frequently and add compost.";
+break;
+
+case "Black":
+soiltip="🧪 Soil Tip: Excellent for cotton and soybean.";
+break;
+
+case "Red":
+soiltip="🧪 Soil Tip: Add fertilizers rich in nitrogen.";
+break;
+
+}
+
+
+// Weather Tip
+
+if(weather=="Sunny")
+weatherTip="☀ Weather Advice: Water crops in morning or evening.";
+
+else if(weather=="Rainy")
+weatherTip="🌧 Weather Advice: Avoid over-irrigation.";
+
+else
+weatherTip="☁ Weather Advice: Monitor humidity and crop diseases.";
+
+
+// Display
+
+document.getElementById("crop").innerHTML=crop;
+document.getElementById("irrigation").innerHTML=irrigation;
+document.getElementById("soiltip").innerHTML=soiltip;
+document.getElementById("weatherTip").innerHTML=weatherTip;
+
+document.getElementById("output").style.display="block";
+
+}
+
+</script>
+
+</body>
+</html>

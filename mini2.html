@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Disaster Resource Coordination System</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#ff512f,#dd2476);
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+padding:20px;
+}
+
+.container{
+width:430px;
+background:#fff;
+padding:25px;
+border-radius:15px;
+box-shadow:0 10px 25px rgba(0,0,0,.3);
+}
+
+h1{
+text-align:center;
+color:#d32f2f;
+margin-bottom:20px;
+}
+
+label{
+display:block;
+margin-top:12px;
+font-weight:bold;
+}
+
+input,select{
+width:100%;
+padding:10px;
+margin-top:5px;
+border:1px solid #ccc;
+border-radius:8px;
+font-size:15px;
+}
+
+button{
+width:100%;
+padding:12px;
+margin-top:20px;
+background:#d32f2f;
+color:white;
+border:none;
+border-radius:8px;
+font-size:17px;
+cursor:pointer;
+transition:.3s;
+}
+
+button:hover{
+background:#b71c1c;
+}
+
+.result{
+display:none;
+margin-top:20px;
+background:#f8f8f8;
+padding:15px;
+border-left:6px solid #d32f2f;
+border-radius:8px;
+}
+
+.result h3{
+margin-bottom:10px;
+color:#d32f2f;
+}
+
+.footer{
+margin-top:15px;
+text-align:center;
+font-size:13px;
+color:#666;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🚨 Disaster Resource Coordination</h1>
+
+<label>Location</label>
+<input type="text" id="location" placeholder="Enter Location">
+
+<label>Disaster Type</label>
+<select id="type">
+<option>Flood</option>
+<option>Earthquake</option>
+<option>Fire</option>
+<option>Cyclone</option>
+<option>Landslide</option>
+</select>
+
+<label>People Affected</label>
+<input type="number" id="people" placeholder="Enter Number">
+
+<label>Severity</label>
+<select id="severity">
+<option>Low</option>
+<option>Medium</option>
+<option>High</option>
+</select>
+
+<button onclick="allocate()">Allocate Resources</button>
+
+<div class="result" id="output">
+<h3>Emergency Response Plan</h3>
+
+<p id="priority"></p>
+<p id="resources"></p>
+<p id="vehicles"></p>
+<p id="medical"></p>
+<p id="shelter"></p>
+<p id="message"></p>
+
+</div>
+
+<div class="footer">
+Disaster Resource Coordination System | Mini Project
+</div>
+
+</div>
+
+<script>
+
+function allocate(){
+
+let location=document.getElementById("location").value;
+let type=document.getElementById("type").value;
+let people=parseInt(document.getElementById("people").value);
+let severity=document.getElementById("severity").value;
+
+if(location=="" || isNaN(people)){
+alert("Please fill all fields");
+return;
+}
+
+let priority="";
+let resources="";
+let vehicles="";
+let medical="";
+let shelter="";
+let message="";
+
+
+// Priority
+
+if(severity=="High" || people>500)
+priority="🔴 Priority Level: HIGH";
+
+else if(severity=="Medium" || people>200)
+priority="🟠 Priority Level: MEDIUM";
+
+else
+priority="🟢 Priority Level: LOW";
+
+
+// Resource Allocation
+
+if(people<=100){
+
+resources="👮 Rescue Team: 10 Members";
+vehicles="🚑 Ambulances: 2 | 🚒 Fire Trucks: 1";
+medical="🏥 Medical Kits: 25";
+shelter="🏠 Temporary Shelter Capacity: 100";
+
+}
+
+else if(people<=500){
+
+resources="👮 Rescue Team: 30 Members";
+vehicles="🚑 Ambulances: 5 | 🚒 Fire Trucks: 2";
+medical="🏥 Medical Kits: 100";
+shelter="🏠 Temporary Shelter Capacity: 500";
+
+}
+
+else{
+
+resources="👮 Rescue Team: 60 Members";
+vehicles="🚑 Ambulances: 10 | 🚒 Fire Trucks: 5";
+medical="🏥 Medical Kits: 300";
+shelter="🏠 Temporary Shelter Capacity: 1000";
+
+}
+
+
+// Disaster Message
+
+switch(type){
+
+case "Flood":
+message="🌊 Move people to higher ground and distribute clean drinking water.";
+break;
+
+case "Earthquake":
+message="🏢 Conduct search and rescue. Check damaged buildings before entry.";
+break;
+
+case "Fire":
+message="🔥 Deploy fire engines immediately and evacuate nearby residents.";
+break;
+
+case "Cyclone":
+message="🌀 Open cyclone shelters and suspend transportation if required.";
+break;
+
+case "Landslide":
+message="⛰ Close affected roads and begin debris removal operations.";
+break;
+
+}
+
+
+// Display
+
+document.getElementById("priority").innerHTML=priority;
+document.getElementById("resources").innerHTML=resources;
+document.getElementById("vehicles").innerHTML=vehicles;
+document.getElementById("medical").innerHTML=medical;
+document.getElementById("shelter").innerHTML=shelter;
+document.getElementById("message").innerHTML=message;
+
+document.getElementById("output").style.display="block";
+
+}
+
+</script>
+
+</body>
+</html>
